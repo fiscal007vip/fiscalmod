@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HZ Pro, noticias, guías y trucos para jugadores.">
+  <title>Fiscal007Vip | Noticias y guías gaming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --surface: #15181d;
+      --surface-2: #1c2026;
+      --text: #f6f2e9;
+      --muted: #959ba5;
+      --line: rgba(255, 255, 255, .1);
+      --accent: #e4ff3f;
+      --accent-dark: #b9d318;
+      --danger: #ff5d50;
+      --radius: 3px;
+      --page: 1180px;
+    }
+    /* Estilos de la ventana emergente (Modal) */
+        .sens-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: none;
+            background: rgba(7, 9, 11, 0.85);
+            backdrop-filter: blur(8px);
+            place-items: center;
+            padding: 20px;
+        }
+        .sens-modal.open {
+            display: grid;
+        }
+        .sens-modal-content {
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            padding: 30px;
+            width: min(450px, 100%);
+            border-radius: 4px;
+            position: relative;
+        }
+        .sens-modal-content h3 {
+            font-family: "Barlow Condensed", sans-serif;
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 82% 8%, rgba(228, 255, 63, .08), transparent 24rem),
+        linear-gradient(180deg, #0b0d0f 0%, var(--bg) 35%, #101318 100%);
+      font-family: "Manrope", sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      opacity: .16;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.19'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .container {
+      width: min(calc(100% - 38px), var(--page));
+      margin-inline: auto;
+    }
+
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: rgba(8, 10, 12, .92);
+      color: var(--muted);
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .topbar .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 34px;
+    }
+
+    .live-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(228, 255, 63, .1);
+    }
+
+    .edit-trigger {
+      padding: 4px 10px;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--line);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      transition: .2s ease;
+    }
+
+    .edit-trigger:hover, .edit-trigger.active {
+      color: #11140a;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(13, 15, 18, .9);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      min-height: 78px;
+      gap: 42px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 2.1rem;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+
+    .logo-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      color: #12150a;
+      background: var(--accent);
+      place-items: center;
+      transform: skew(-8deg);
+    }
+
+    .logo mark {
+      padding: 0;
+      color: var(--accent);
+      background: transparent;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(18px, 2.4vw, 36px);
+    }
+
+    .nav a {
+      position: relative;
+      color: #c5c9cf;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .nav a::after {
+      position: absolute;
+      right: 0;
+      bottom: -9px;
+      left: 0;
+      height: 2px;
+      content: "";
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform .25s ease;
+    }
+
+    .nav a:hover { color: var(--text); }
+    .nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    .search-button, .menu-button {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      color: var(--text);
+      background: transparent;
+      border: 1px solid var(--line);
+      place-items: center;
+    }
+
+    .menu-button { display: none; }
+
+    .ticker {
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background: #111419;
+    }
+
+    .ticker-inner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      min-height: 42px;
+    }
+
+    .ticker-label {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      padding: 0 22px;
+      color: #15170c;
+      background: var(--accent);
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: .9rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      clip-path: polygon(0 0, 91% 0, 100% 50%, 91% 100%, 0 100%);
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 24s linear infinite;
+    }
+
+    .ticker-track span {
+      padding-left: 50px;
+      color: #b4b9c1;
+      font-size: .76rem;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+
+    @keyframes ticker { to { transform: translateX(-50%); } }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(280px, .8fr);
+      gap: 12px;
+      padding-block: 34px 42px;
+    }
+
+    .story {
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+      background: var(--surface);
+      isolation: isolate;
+    }
+
+    .story-large { min-height: 520px; }
+    .story img {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .7s cubic-bezier(.2, .7, .2, 1), filter .4s ease;
+    }
+
+    .story::after {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      content: "";
+      background: linear-gradient(180deg, transparent 26%, rgba(6, 8, 10, .25) 49%, rgba(6, 8, 10, .97) 100%);
+    }
+
+    .story:hover img { transform: scale(1.045); filter: saturate(1.12); }
+
+    .story-content {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: clamp(22px, 4vw, 44px);
+    }
+
+    .story-side .story-content { padding: 24px; }
+    .side-stories { display: grid; gap: 12px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 13px;
+      color: var(--accent);
+      font-size: .68rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 20px;
+      height: 2px;
+      content: "";
+      background: currentColor;
+    }
+
+    h1, h2, h3, h4, p { margin-top: 0; }
+    h1, h2, h3, h4 {
+      font-family: "Barlow Condensed", sans-serif;
+      line-height: .98;
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 750px;
+      margin-bottom: 18px;
+      font-size: clamp(2.8rem, 6vw, 5.6rem);
+      font-weight: 900;
+      letter-spacing: -.035em;
+      text-transform: uppercase;
+    }
+
+    .story-side h2 {
+      margin-bottom: 12px;
+      font-size: clamp(1.65rem, 2.3vw, 2.35rem);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      color: #b0b5bd;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+    .section { padding-block: 32px 72px; }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-heading h2 {
+      position: relative;
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      font-style: italic;
+      font-weight: 900;
+      letter-spacing: -.03em;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2::after {
+      position: absolute;
+      bottom: -16px;
+      left: 0;
+      width: 74px;
+      height: 3px;
+      content: "";
+      background: var(--accent);
+    }
+
+    .section-heading a {
+      color: var(--muted);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .content-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 48px;
+    }
+
+    .posts { display: grid; gap: 28px; }
+    .post-card {
+      display: grid;
+      grid-template-columns: minmax(220px, .82fr) minmax(0, 1.18fr);
+      min-height: 236px;
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .post-card:hover {
+      background: var(--surface-2);
+      border-color: rgba(228, 255, 63, .42);
+      transform: translateY(-4px);
+    }
+
+    .post-image { position: relative; min-height: 220px; overflow: hidden; }
+    .post-image img { height: 100%; object-fit: cover; transition: transform .55s ease; }
+    .post-card:hover img { transform: scale(1.05); }
+
+    .post-number {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 7px 12px;
+      color: #14170c;
+      background: var(--accent);
+      font-family: "Barlow Condensed", sans-serif;
+      font-size: 1rem;
+      font-weight: 900;
+    }
+
+    .post-copy { display: flex; flex-direction: column; justify-content: center; padding: 28px; }
+    .post-copy h3 {
+      margin-bottom: 14px;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .post-copy p { margin-bottom: 18px; color: #aeb3bb; font-size: .87rem; }
+
+    .sidebar { display: grid; align-content: start; gap: 34px; }
+    .side-box {
+      padding: 26px;
+      background: var(--surface);
+      border-top: 3px solid var(--accent);
+    }
+
+    .side-box h3 {
+      margin-bottom: 22px;
+      font-size: 1.65rem;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+
+    .popular-item {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 15px;
+      padding-block: 17px;
+      border-top: 1px solid var(--line);
+    }
+
+    .popular-item:first-of-type { padding-top: 0; border-top: 0; }
+    .popular-item img { width: 64px; height: 64px; object-fit: cover; }
+    .popular-item h4 { margin: 0 0 7px; font-size: 1.05rem; line-height: 1.08; text-transform: uppercase; }
+
+    .newsletter {
+      position: relative;
+      overflow: hidden;
+      padding: 31px;
+      color: #17190f;
+      background: var(--accent);
+    }
+
+    .newsletter::after {
+      position: absolute;
+      right: -36px;
+      bottom: -68px;
+      width: 170px;
+      height: 170px;
+      content: "";
+      border: 26px solid rgba(13, 15, 18, .1);
+      border-radius: 50%;
+    }
+
+    .newsletter h3 { margin-bottom: 12px; font-size: 2rem; text-transform: uppercase; }
+    .newsletter p { position: relative; z-index: 1; font-size: .84rem; }
+    .newsletter input {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      margin: 9px 0;
+      padding: 13px;
+      color: var(--text);
+      background: #11140d;
+      border: 0;
+      outline: 0;
+    }
+
+    .newsletter button {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 12px;
+      color: var(--text);
+      background: transparent;
+      border: 2px solid #16190e;
+      font-size: .73rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .newsletter-message { min-height: 20px; margin: 7px 0 0 !important; font-weight: 700; }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: 1.35fr .65fr .65fr;
+      grid-auto-rows: 250px;
+      gap: 12px;
+    }
+
+    .category-card {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .category-card:first-child { grid-row: span 2; }
+    .category-card:last-child { grid-column: span 2; }
+    .category-card img { position: absolute; z-index: -2; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .category-card::after { position: absolute; inset: 0; z-index: -1; content: ""; background: linear-gradient(180deg, transparent, rgba(7, 9, 11, .95)); }
+    .category-card:hover img { transform: scale(1.06); }
+    .category-card div { position: absolute; right: 0; bottom: 0; left: 0; padding: 25px; }
+    .category-card h3 { margin: 0; font-size: 2rem; text-transform: uppercase; }
+
+    .footer { padding: 58px 0 24px; background: #090b0d; border-top: 1px solid var(--line); }
+    .footer-grid { display: grid; grid-template-columns: 1.2fr .8fr .8fr; gap: 60px; padding-bottom: 45px; }
+    .footer p { max-width: 520px; color: var(--muted); font-size: .84rem; }
+    .footer h3 { margin-bottom: 18px; font-size: 1.2rem; letter-spacing: .04em; text-transform: uppercase; }
+    .footer-links { display: grid; gap: 8px; color: #b8bdc4; font-size: .8rem; }
+    .copyright { padding-top: 22px; color: #6f757e; border-top: 1px solid var(--line); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+
+    .search-panel {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: grid;
+      padding: 24px;
+      background: rgba(7, 9, 11, .96);
+      place-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: .25s ease;
+    }
+
+    .search-panel.open { opacity: 1; visibility: visible; }
+    .search-panel form { width: min(700px, 100%); }
+    .search-panel label { display: block; margin-bottom: 14px; color: var(--accent); font-family: "Barlow Condensed", sans-serif; font-size: 1.4rem; text-transform: uppercase; }
+    .search-panel input { width: 100%; padding: 18px 0; color: var(--text); background: transparent; border: 0; border-bottom: 2px solid var(--accent); outline: 0; font-family: "Barlow Condensed", sans-serif; font-size: clamp(2rem, 6vw, 5rem); }
+    .close-search { position: absolute; top: 26px; right: 26px; color: var(--text); background: transparent; border: 0; font-size: 2rem; }
+
+    .edit-note {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 40;
+      display: none;
+      width: min(350px, calc(100% - 36px));
+      padding: 16px 18px;
+      color: #17190f;
+      background: var(--accent);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .35);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .editing .edit-note { display: block; }
+    .editing [data-editable] { outline: 1px dashed rgba(228, 255, 63, .75); outline-offset: 4px; cursor: text; }
+    .editing img[data-editable-image] { outline: 2px dashed var(--accent); outline-offset: -5px; cursor: pointer; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 960px) {
+      .header-inner { grid-template-columns: 1fr auto auto; gap: 10px; }
+      .nav { position: fixed; top: 113px; right: 0; left: 0; display: grid; gap: 0; padding: 10px 20px 24px; background: #101318; border-bottom: 1px solid var(--line); transform: translateY(-140%); transition: transform .3s ease; }
+      .nav.open { transform: translateY(0); }
+      .nav a { padding: 15px 4px; border-bottom: 1px solid var(--line); }
+      .menu-button { display: grid; }
+      .hero { grid-template-columns: 1fr; }
+      .side-stories { grid-template-columns: 1fr 1fr; }
+      .content-layout { grid-template-columns: 1fr; }
+      .sidebar { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .container { width: min(calc(100% - 24px), var(--page)); }
+      .topbar .top-date { display: none; }
+      .header-inner { min-height: 66px; }
+      .logo { font-size: 1.75rem; }
+      .logo-mark { width: 34px; height: 34px; }
+      .nav { top: 101px; }
+      .ticker-inner { grid-template-columns: 105px 1fr; }
+      .ticker-label { padding-inline: 12px; }
+      .hero { padding-top: 18px; }
+      .story-large { min-height: 470px; }
+      .side-stories { grid-template-columns: 1fr; }
+      h1 { font-size: 3.15rem; }
+      .post-card { grid-template-columns: 1fr; }
+      .post-image { min-height: 210px; }
+      .sidebar { grid-template-columns: 1fr; }
+      .category-grid { grid-template-columns: 1fr; grid-auto-rows: 260px; }
+      .category-card:first-child, .category-card:last-child { grid-row: auto; grid-column: auto; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+      .section { padding-bottom: 52px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div><span class="live-dot"></span><span data-editable>Actualidad gamer todos los días</span></div>
+      <span class="top-date" id="currentDate"></span>
+      <button class="edit-trigger" id="editTrigger" type="button">Modo editar</button>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#inicio" aria-label="HZ Pro inicio">
+        <span class="logo-mark"></span><span data-editable>Fiscal <mark>007 VIP</mark></span>
+      </a>
+      <nav class="nav" id="mainNav" aria-label="Navegación principal">
+        <a href="#inicio" data-editable>Inicio</a>
+        <a href="#noticias" data-editable>Noticias</a>
+        <a href="#guias" data-editable>Guías</a>
+        <a href="#juegos" data-editable>Juegos</a>
+        <a href="#contacto" data-editable>Contacto</a>
+      </nav>
+      <button class="search-button" id="searchButton" type="button" aria-label="Abrir buscador">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 5 5" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menú">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="ticker">
+    <div class="container ticker-inner">
+      <span class="ticker-label">En tendencia</span>
+      <div class="ticker-track">
+        <span data-editable>Nuevos códigos y recompensas disponibles esta semana</span>
+        <span data-editable>La actualización que cambia el mapa competitivo</span>
+        <span data-editable>Cómo mejorar tu puntería con tres ajustes sencillos</span>
+        <span data-editable>Nuevos códigos y recompensas disponibles esta semana</span>
+        <span data-editable>La actualización que cambia el mapa competitivo</span>
+        <span data-editable>Cómo mejorar tu puntería con tres ajustes sencillos</span>
+      </div>
+    </div>
+  </div>
+
+  <main id="inicio">
+    <section class="container hero">
+      <article class="story story-large reveal">
+        <img data-editable-image src="imagenes/img2.png" alt="Jugadores en una competición de videojuegos">
+        <div class="story-content">
+          <span class="eyebrow" data-editable>Destacado</span>
+          <h1 data-editable>SUBE DE NIVEL A TU MANERA.</h1>
+          <div class="meta"><span data-editable>FISCAL 007 VIP</span><span data-editable>5 min de lectura</span></div>
+        </div>
+      </article>
+
+      <div class="side-stories">
+        <article class="story story-side reveal">
+          <img data-editable-image src="imagenes/img3.jpg" alt="Persona jugando en consola">
+          <div class="story-content">
+            <span class="eyebrow" data-editable>Guías</span>
+            <h2 data-editable>MONITE PROXY AUMENTAR TU NIVEL.</h2>
+            <div class="meta"><span data-editable>Hace 2 horas</span></div>
+          </div>
+        </article>
+        <article class="story story-side reveal">
+          <img data-editable-image src="imagenes/img9.jpg" alt="Control de videojuegos con luces verdes">
+          <div class="story-content">
+            <span class="eyebrow" data-editable>Noticias</span>
+            <h2 data-editable>Los archivos mas esperados del mes.</h2>
+            <div class="meta"><span data-editable>Hace 6 horas</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="noticias">
+      <div class="section-heading reveal">
+        <h2 data-editable>ARCHIVOS FREE FIRE</h2>
+        <a href="#noticias" data-editable>Ver todas→</a>
+      </div>
+
+      <!-- Primer catálogo con espacio de separación inferior -->
+<div class="content-layout" id="guias">
+    <div class="posts" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        
+        <article class="post-card reveal" style="background: #121212; border: 1px solid #222; border-radius: 20px; padding: 20px; width: 100%; max-width: 450px; box-shadow: 0 12px 30px rgba(0,0,0,0.8); color: #fff; box-sizing: border-box; font-family: sans-serif; margin-bottom: 30px;">
+            
+            <!-- Imagen Arriba con su número -->
+            <div class="post-image" style="cursor: pointer; position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 15px; height: 220px; background: #000;" onclick="document.getElementById('sensModal1').classList.add('open')">
+                <img data-editable-image src="imagenes/img5.jpg" alt="Videojuego en una pantalla" style="width: 100%; height: 100%; object-fit: cover;">
+                <span class="post-number" style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold;">01</span>
+            </div>
+            
+            <!-- Contenido de Texto -->
+            <div class="post-copy" style="margin-bottom: 20px;">
+                <span class="eyebrow" data-editable style="color: #ff0000; font-weight: bold; font-size: 12px; letter-spacing: 1px;">Actualización</span>
+                <h3 data-editable style="font-size: 16px; color: #fff; margin: 8px 0; line-height: 1.4;">pegaras todo rojo aimbot para android actualizado</h3>
+                <p data-editable style="font-size: 13px; color: #aaa; margin: 0 0 12px 0;">​El mejor aimbot definitivo para jugadores que buscan ganar reacción máxima y precisión extrema en cada enfrentamiento.</p>
+                <div class="meta" style="display: flex; justify-content: space-between; font-size: 11px; color: #777;">
+                    <span data-editable>Octubre 02, 2026</span>
+                    <span data-editable>4k comentarios</span>
+                </div>
+            </div>
+
+            <!-- Los 3 Botones de Descarga Abajo -->
+            <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #222; padding-top: 15px;">
+                
+                <!-- Botón 1 -->
+                <a href="https://www.mediafire.com/file/l8dulhy6j08qco7/AIMBOT_ACTUALIZADO_%25F0%259F%2587%25A7%25F0%259F%2587%25B7.rar/file" class="btn-soon" target="_blank" onclick="event.preventDefault(); window.open('https://omg10.com/4/11510691'); setTimeout(() => { window.location.href = this.href; }, 1000);" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #ff0000; color: #fff; text-align: center; padding: 10px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 10px rgba(255,0,0,0.3); box-sizing: border-box;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    Descargar
+                </a>
+
+            </div>
+
+        </article>
+        
+    </div>
+</div>
+
+          <!-- Primer catálogo con espacio de separación inferior -->
+<div class="content-layout" id="guias">
+    <div class="posts" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        
+        <article class="post-card reveal" style="background: #121212; border: 1px solid #222; border-radius: 20px; padding: 20px; width: 100%; max-width: 450px; box-shadow: 0 12px 30px rgba(0,0,0,0.8); color: #fff; box-sizing: border-box; font-family: sans-serif; margin-bottom: 30px;">
+            
+            <!-- Imagen Arriba con su número -->
+            <div class="post-image" style="cursor: pointer; position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 15px; height: 220px; background: #000;" onclick="document.getElementById('sensModal1').classList.add('open')">
+                <img data-editable-image src="imagenes/img8.jpg" alt="Videojuego en una pantalla" style="width: 100%; height: 100%; object-fit: cover;">
+                <span class="post-number" style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold;">02</span>
+            </div>
+            
+            <!-- Contenido de Texto -->
+            <div class="post-copy" style="margin-bottom: 20px;">
+                <span class="eyebrow" data-editable style="color: #ff0000; font-weight: bold; font-size: 12px; letter-spacing: 1px;">Actualización</span>
+                <h3 data-editable style="font-size: 16px; color: #fff; margin: 8px 0; line-height: 1.4;">PROXY AIMBOT CABEZA SUPER ARCHIVO PARA CUENTA PRINCIPAL</h3>
+                <p data-editable style="font-size: 13px; color: #aaa; margin: 0 0 12px 0;">​​El mejor aimbot definitivo para jugadores que buscan ganar reacción máxima y precisión extrema en cada enfrentamiento.</p>
+                <div class="meta" style="display: flex; justify-content: space-between; font-size: 11px; color: #777;">
+                    <span data-editable>Agosto 05, 2026</span>
+                    <span data-editable>4 comentarios</span>
+                </div>
+            </div>
+
+            <!-- Los 3 Botones de Descarga Abajo -->
+            <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #222; padding-top: 15px;">
+                
+                <!-- Botón 1 -->
+                <a href="https://www.mediafire.com/file/l8dulhy6j08qco7/AIMBOT_ACTUALIZADO_%25F0%259F%2587%25A7%25F0%259F%2587%25B7.rar/file" class="btn-soon" target="_blank" onclick="event.preventDefault(); window.open('https://omg10.com/4/11510691'); setTimeout(() => { window.location.href = this.href; }, 1000);" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #ff0000; color: #fff; text-align: center; padding: 10px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 10px rgba(255,0,0,0.3); box-sizing: border-box;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    Descargar
+                </a>
+
+            </div>
+
+        </article>
+        
+    </div>
+</div>
+
+          <!-- Primer catálogo con espacio de separación inferior -->
+<div class="content-layout" id="guias">
+    <div class="posts" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        
+        <article class="post-card reveal" style="background: #121212; border: 1px solid #222; border-radius: 20px; padding: 20px; width: 100%; max-width: 450px; box-shadow: 0 12px 30px rgba(0,0,0,0.8); color: #fff; box-sizing: border-box; font-family: sans-serif; margin-bottom: 30px;">
+            
+            <!-- Imagen Arriba con su número -->
+            <div class="post-image" style="cursor: pointer; position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 15px; height: 220px; background: #000;" onclick="document.getElementById('sensModal1').classList.add('open')">
+                <img data-editable-image src="imagenes/img6.jpg" alt="Videojuego en una pantalla" style="width: 100%; height: 100%; object-fit: cover;">
+                <span class="post-number" style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold;">03</span>
+            </div>
+            
+            <!-- Contenido de Texto -->
+            <div class="post-copy" style="margin-bottom: 20px;">
+                <span class="eyebrow" data-editable style="color: #ff0000; font-weight: bold; font-size: 12px; letter-spacing: 1px;">Actualización</span>
+                <h3 data-editable style="font-size: 16px; color: #fff; margin: 8px 0; line-height: 1.4;">PROXY GRINGO XP MOD MENU HS 9999%</h3>
+                <p data-editable style="font-size: 13px; color: #aaa; margin: 0 0 12px 0;">​El mejor aimbot definitivo para jugadores que buscan ganar reacción máxima y precisión extrema en cada enfrentamiento.</p>
+                <div class="meta" style="display: flex; justify-content: space-between; font-size: 11px; color: #777;">
+                    <span data-editable>Agosto 05, 2026</span>
+                    <span data-editable>4 comentarios</span>
+                </div>
+            </div>
+
+            <!-- Los 3 Botones de Descarga Abajo -->
+            <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #222; padding-top: 15px;">
+                
+                <!-- Botón 1 -->
+                <a href="https://www.mediafire.com/file/l8dulhy6j08qco7/AIMBOT_ACTUALIZADO_%25F0%259F%2587%25A7%25F0%259F%2587%25B7.rar/file" class="btn-soon" target="_blank" onclick="event.preventDefault(); window.open('https://omg10.com/4/11510691'); setTimeout(() => { window.location.href = this.href; }, 1000);" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #ff0000; color: #fff; text-align: center; padding: 10px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 10px rgba(255,0,0,0.3); box-sizing: border-box;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    Descargar
+                </a>
+
+            </div>
+
+        </article>
+        
+    </div>
+</div>
+
+
+<!-- Primer catálogo con espacio de separación inferior -->
+<div class="content-layout" id="guias">
+    <div class="posts" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        
+        <article class="post-card reveal" style="background: #121212; border: 1px solid #222; border-radius: 20px; padding: 20px; width: 100%; max-width: 450px; box-shadow: 0 12px 30px rgba(0,0,0,0.8); color: #fff; box-sizing: border-box; font-family: sans-serif; margin-bottom: 30px;">
+            
+            <!-- Imagen Arriba con su número -->
+            <div class="post-image" style="cursor: pointer; position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 15px; height: 220px; background: #000;" onclick="document.getElementById('sensModal1').classList.add('open')">
+                <img data-editable-image src="imagenes/img10.jpg" alt="Videojuego en una pantalla" style="width: 100%; height: 100%; object-fit: cover;">
+                <span class="post-number" style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold;">04</span>
+            </div>
+            
+            <!-- Contenido de Texto -->
+            <div class="post-copy" style="margin-bottom: 20px;">
+                <span class="eyebrow" data-editable style="color: #ff0000; font-weight: bold; font-size: 12px; letter-spacing: 1px;">Actualización</span>
+                <h3 data-editable style="font-size: 16px; color: #fff; margin: 8px 0; line-height: 1.4;">La mejor sensibilidad mas alta para pegar todo rojo</h3>
+                <p data-editable style="font-size: 13px; color: #aaa; margin: 0 0 12px 0;">​La configuración definitiva para jugadores que buscan velocidad de reacción máxima y precisión extrema en cada enfrentamiento.</p>
+                <div class="meta" style="display: flex; justify-content: space-between; font-size: 11px; color: #777;">
+                    <span data-editable>Agosto 05, 2026</span>
+                    <span data-editable>4 comentarios</span>
+                </div>
+            </div>
+
+            <!-- Los 3 Botones de Descarga Abajo -->
+            <div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #222; padding-top: 15px;">
+                
+                <!-- Botón 1 -->
+                <a href="https://www.mediafire.com/file/l8dulhy6j08qco7/AIMBOT_ACTUALIZADO_%25F0%259F%2587%25A7%25F0%259F%2587%25B7.rar/file" class="btn-soon" target="_blank" onclick="event.preventDefault(); window.open('https://omg10.com/4/11510691'); setTimeout(() => { window.location.href = this.href; }, 1000);" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #ff0000; color: #fff; text-align: center; padding: 10px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 13px; box-shadow: 0 4px 10px rgba(255,0,0,0.3); box-sizing: border-box;">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    Descargar
+                </a>
+
+            </div>
+
+        </article>
+        
+    </div>
+</div>
+
+
+        <aside class="sidebar">
+          <div class="side-box reveal">
+            <h3 data-editable>Lo más visto</h3>
+            <article class="popular-item">
+              <img data-editable-image src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?auto=format&fit=crop&w=300&q=80" alt="Jugador con auriculares">
+              <div><h4 data-editable>Sube de rango más rápido</h4><div class="meta"><span data-editable>8.4K vistas</span></div></div>
+            </article>
+            <article class="popular-item">
+              <img data-editable-image src="https://images.unsplash.com/photo-1580327344181-c1163234e5a0?auto=format&fit=crop&w=300&q=80" alt="Control de consola">
+              <div><h4 data-editable>AIMBOT PECHO ANDROID</h4><div class="meta"><span data-editable>6.9K vistas</span></div></div>
+            </article>
+            <article class="popular-item">
+              <img data-editable-image src="https://images.unsplash.com/photo-1547394765-185e1e68f34e?auto=format&fit=crop&w=300&q=80" alt="Teclado y ratón gamer">
+              <div><h4 data-editable>HOLOGRAMA NARANJA ACTUALIZADO </h4><div class="meta"><span data-editable>5.1K vistas</span></div></div>
+            </article>
+          </div>
+
+          <form class="newsletter reveal" id="newsletterForm">
+            <h3 data-editable>Únete al equipo</h3>
+            <p data-editable>Recibe cada semana noticias, trucos y recomendaciones.</p>
+            <input id="emailInput" type="email" placeholder="tu@email.com" aria-label="Correo electrónico" required>
+            <button type="submit" data-editable>Suscribirme</button>
+            <p class="newsletter-message" id="newsletterMessage" aria-live="polite"></p>
+          </form>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section container" id="juegos">
+      <div class="section-heading reveal">
+        <h2 data-editable>Explora por juego</h2>
+        <a href="#juegos" data-editable>Todas las categorías →</a>
+      </div>
+      <div class="category-grid">
+        <a class="category-card reveal" href="#guias">
+          <img data-editable-image src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=1100&q=85" alt="Persona jugando videojuegos">
+          <div><span class="eyebrow" data-editable>24 artículos</span><h3 data-editable>Battle Royale</h3></div>
+        </a>
+        <a class="category-card reveal" href="#guias">
+          <img data-editable-image src="https://images.unsplash.com/photo-1522069213448-443a614da9b6?auto=format&fit=crop&w=700&q=85" alt="Juegos en ordenador">
+          <div><span class="eyebrow" data-editable>18 artículos</span><h3 data-editable>PC</h3></div>
+        </a>
+        <a class="category-card reveal" href="#guias">
+          <img data-editable-image src="https://images.unsplash.com/photo-1600080972464-8e5f35f63d08?auto=format&fit=crop&w=700&q=85" alt="Control de consola moderno">
+          <div><span class="eyebrow" data-editable>16 artículos</span><h3 data-editable>Consola</h3></div>
+        </a>
+        <a class="category-card reveal" href="#guias">
+          <img data-editable-image src="https://images.unsplash.com/photo-1601887389937-0b02c26b602c?auto=format&fit=crop&w=1000&q=85" alt="Teléfono móvil para jugar">
+          <div><span class="eyebrow" data-editable>31 artículos</span><h3 data-editable>Juegos móviles</h3></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contacto">
+    <div class="container footer-grid">
+      <div>
+        <a class="logo" href="#inicio"><span class="logo-mark"></span><span data-editable>Fiscal <mark>007</mark></span>VIP</a>
+        <p data-editable>Noticias, guías y cultura gaming explicadas de forma clara para una comunidad que siempre quiere jugar mejor.</p>
+      </div>
+      <div><h3 data-editable>Secciones</h3><div class="footer-links"><a href="#noticias" data-editable>Noticias</a><a href="#guias" data-editable>Guías y trucos</a><a href="#juegos" data-editable>Juegos</a></div></div>
+      <div><h3 data-editable>Contacto</h3><div class="footer-links"><a href="mailto:hola@hzpro.com" data-editable>fiscalvip@gmail.com</a><a href="#" data-editable>Instagram</a><a href="#" data-editable>YouTube</a></div></div>
+    </div>
+    <div class="container copyright"><span data-editable>© 2026 Fiscal007Vip. Creador de la pagina WEB.</span></div>
+  </footer>
+
+  <div class="search-panel" id="searchPanel" role="dialog" aria-modal="true" aria-label="Buscador">
+    <button class="close-search" id="closeSearch" type="button" aria-label="Cerrar buscador">×</button>
+    <form id="searchForm"><label for="searchInput">Buscar Aqui</label><input id="searchInput" type="search" placeholder="Escribe aquí…"></form>
+  </div>
+
+  <div class="edit-note">
+    <strong>Modo editar activado.</strong><br>
+    Haz clic en cualquier texto para cambiarlo. Haz clic en una imagen para pegar otra URL. Pulsa “Guardar cambios” al terminar.
+  </div>
+
+  <script>
+    const body = document.body;
+    const editTrigger = document.getElementById('editTrigger');
+    const editables = [...document.querySelectorAll('[data-editable]')];
+    const editableImages = [...document.querySelectorAll('[data-editable-image]')];
+    const storageKey = 'fiscal-page-content-v1';
+    let editing = false;
+
+    const dateFormatter = new Intl.DateTimeFormat('es', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+    document.getElementById('currentDate').textContent = dateFormatter.format(new Date());
+
+    function loadSavedContent() {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      if (!saved) return;
+      editables.forEach((element, index) => {
+        if (saved.texts?.[index] !== undefined) element.innerHTML = saved.texts[index];
+      });
+      editableImages.forEach((image, index) => {
+        if (saved.images?.[index]) image.src = saved.images[index];
+      });
+    }
+
+    function saveContent() {
+      localStorage.setItem(storageKey, JSON.stringify({
+        texts: editables.map(element => element.innerHTML),
+        images: editableImages.map(image => image.src)
+      }));
+    }
+
+    editTrigger.addEventListener('click', () => {
+      editing = !editing;
+      body.classList.toggle('editing', editing);
+      editTrigger.classList.toggle('active', editing);
+      editTrigger.textContent = editing ? 'Guardar cambios' : 'Modo editar';
+      editables.forEach(element => element.contentEditable = editing ? 'true' : 'false');
+      if (!editing) saveContent();
+    });
+
+    editableImages.forEach(image => {
+      image.addEventListener('click', event => {
+        if (!editing) return;
+        event.preventDefault();
+        const newUrl = window.prompt('Pega la URL de la nueva imagen:', image.src);
+        if (newUrl?.trim()) image.src = newUrl.trim();
+      });
+    });
+
+    const menuButton = document.getElementById('menuButton');
+    const mainNav = document.getElementById('mainNav');
+    menuButton.addEventListener('click', () => mainNav.classList.toggle('open'));
+    mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => mainNav.classList.remove('open')));
+
+    const searchPanel = document.getElementById('searchPanel');
+    const searchInput = document.getElementById('searchInput');
+    document.getElementById('searchButton').addEventListener('click', () => {
+      searchPanel.classList.add('open');
+      window.setTimeout(() => searchInput.focus(), 150);
+    });
+    document.getElementById('closeSearch').addEventListener('click', () => searchPanel.classList.remove('open'));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') searchPanel.classList.remove('open');
+    });
+    document.getElementById('searchForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const query = searchInput.value.trim().toLowerCase();
+      if (!query) return;
+      const match = editables.find(element => element.textContent.toLowerCase().includes(query));
+      if (match) {
+        searchPanel.classList.remove('open');
+        match.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        match.animate([{ background: 'rgba(228,255,63,.45)' }, { background: 'transparent' }], { duration: 1600 });
+      } else {
+        searchInput.value = '';
+        searchInput.placeholder = 'No se encontraron resultados';
+      }
+    });
+
+    document.getElementById('newsletterForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const email = document.getElementById('emailInput');
+      document.getElementById('newsletterMessage').textContent = `¡Listo! ${email.value} quedó registrado.`;
+      email.value = '';
+    });
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(element => revealObserver.observe(element));
+
+    loadSavedContent();
+  </script>
